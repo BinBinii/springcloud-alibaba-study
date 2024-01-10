@@ -1,0 +1,34 @@
+spring:
+  cloud:
+    nacos:
+      server-addr: http://8.134.51.235:8848/
+      discovery:
+        group: dev
+    sentinel:
+      transport:
+        dashboard: 8.134.51.235:8858
+        port: 8900
+
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  tx-service-group: my-tx-group
+  service:
+    vgroup-mapping:
+      my-tx-group: seata-server
+    grouplist:
+      seata-server: 8.134.51.235:8091
+
+#management:
+#  tracing:
+#    sampling:
+#      probability: 1.0
+#  zipkin:
+#    tracing:
+#      endpoint: http://8.134.51.235:8112/api/v2/spans
+#      connect-timeout: 3s
+#      read-timeout: 10s
+
+logging:
+  pattern:
+    level: ${spring.application.name:},%X{traceId:-},%X{spanId:-} %5p

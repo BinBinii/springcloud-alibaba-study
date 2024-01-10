@@ -1,0 +1,44 @@
+spring:
+  main:
+    web-application-type: reactive
+  cloud:
+    nacos:
+      server-addr: http://8.134.51.235:8848/
+      discovery:
+        group: dev
+    sentinel:
+      transport:
+        dashboard: 8.134.51.235:8858
+        port: 8899
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: consumer-service
+          uri: https://www.qq.com
+          predicates:
+            - Method=GET,POST
+            - Path=/consumer-service/**
+        - id: CONSUMER
+          uri: lb://consumer
+          #          uri: http://192.168.1.125:9110
+          predicates:
+            - Method=GET,POST
+            - Path=/consumer/**
+  security:
+    oauth2:
+      authorizationserver:
+        client:
+
+
+
+knife4j:
+  gateway:
+    enabled: true
+    strategy: discover
+    discover:
+      version: openapi3
+      enabled: true
+      excluded-services:
+        - gateway

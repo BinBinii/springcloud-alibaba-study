@@ -1,0 +1,10 @@
+logging:
+  level:
+    root: info
+    com:
+      sy: debug
+      alibaba: info
+    org:
+      springframework:
+        cloud:
+          gateway: debug
